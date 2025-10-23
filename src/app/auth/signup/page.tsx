@@ -13,6 +13,7 @@ export default function Home() {
     e.preventDefault()
     if(!email.trim() || password.trim()){
       setMessage("All fields are require!")
+      return
     }
     const result = await signUpUser(email, password)
     if(result?.error){

@@ -1,7 +1,31 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
+import { signinInUser, sininInUser } from "../../services/auth";
+import { useState } from "react";
 
 export default function Home() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function signin(e:React.FormEvent) {
+    e.preventDefault()
+    if(!email.trim() && !password.trim()){
+      setMessage("All fields are require")
+      return;
+    }
+    
+    const result = await signinInUser(email, password)
+      if(result?.error){
+        setMessage(result.error)
+      }else{
+        setMessage("Sinin Successful")
+      }
+  }
+
   return (
     <div className="h-screen flex items-center justify-center">
       <div className=" w-[95%] max-w-[300px] rounded-lg py-12 ">
@@ -16,9 +40,19 @@ export default function Home() {
           <span className="mx-4 text-lg text-primary-text">or</span>
           <div className="grow h-px bg-border"></div>
         </div>
-        <input type="text" placeholder="Email" className="mb-4 w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
-        <input type="text" placeholder="Password" className="w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
+        {message && (
+          <p className="bg-primary py-1 mb-4 font-semibold text-center">
+            {message}
+          </p>
+        )}
+        <form onSubmit={signin}>
+          <input value={email}
+          onChange={e=> setEmail(e.target.value)}
+          type="text" placeholder="Email" className="mb-4 w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
+        <input value={password}
+          onChange={e=> setPassword(e.target.value)} type="text" placeholder="Password" className="w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
         <button className="text-black w-full mt-8 rounded-full h-10 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-200 font-semibold bg-white ">Continue</button>
+        </form>
         <button className="text-white w-full mt-8 rounded-full h-10 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-200 font-semibold border border-border hover:text-black ">Forget Password?</button>
         <div className="text-secondary-text mt-8">
           <span className="mr-1">Don&apos;t have an account </span>
