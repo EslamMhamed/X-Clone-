@@ -16,12 +16,13 @@ export default function Home() {
           <span className="mx-4 text-lg text-primary-text">or</span>
           <div className="grow h-px bg-border"></div>
         </div>
-        <input type="text" placeholder="Phone, Email or Username" className="w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
+        <input type="text" placeholder="Email" className="mb-4 w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
+        <input type="text" placeholder="Password" className="w-full bg-background outline-none  rounded-none p-4 placeholder:text-secondary-text border border-border text-white " />
         <button className="text-black w-full mt-8 rounded-full h-10 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-200 font-semibold bg-white ">Continue</button>
         <button className="text-white w-full mt-8 rounded-full h-10 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-200 font-semibold border border-border hover:text-black ">Forget Password?</button>
         <div className="text-secondary-text mt-8">
           <span className="mr-1">Don&apos;t have an account </span>
-          <Link href="#" className="text-primary" >Sign up</Link>
+          <Link href="/auth/signup" className="text-primary" >Sign up</Link>
         </div>
       </div>
     </div>
