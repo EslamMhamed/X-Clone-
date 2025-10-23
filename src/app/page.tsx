@@ -22,7 +22,7 @@ export default function Home() {
       if(result?.error){
         setMessage(result.error)
       }else{
-        setMessage("Sinin Successful")
+        setMessage("Signin Successful")
       }
   }
 

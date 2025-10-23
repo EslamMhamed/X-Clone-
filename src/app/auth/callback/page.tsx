@@ -41,7 +41,7 @@ function Page() {
     },[router])
 
     async function setupUserProfile(e:React.FormEvent) {
-        e.defaultPrevented()
+            e.preventDefault()
         if(!name || !userName || !iamge){
             setMessage("All fields are require")
             return
@@ -56,10 +56,10 @@ function Page() {
             return
         }
 
-        const {data: {publicUrl}} = await supabaseClient.storage.from("avaters").getPublicUrl(imagePath)
+        const {data: {publicUrl}} =  supabaseClient.storage.from("avaters").getPublicUrl(imagePath)
 
-        const {error: insertErr} = await supabaseClient.from("profiles").insert({
-            name, id: user?.id, userName, avatar_url: publicUrl, email: user?.email
+        const {error: insertErr} = await supabaseClient.from("profile").insert({
+            name, id: user?.id, username:userName, avatar_url: publicUrl, email: user?.email
         })
         if(insertErr){
             setMessage(insertErr.message)

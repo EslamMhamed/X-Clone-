@@ -13,9 +13,9 @@ export default function Home() {
 
   async function sinup(e:React.FormEvent) {
     e.preventDefault()
-    if(!email.trim() || password.trim()){
+    if(!email.trim() || !password.trim()){
       setMessage("All fields are require!")
-      return
+      return;
     }
     const result = await signUpUser(email, password)
     if(result?.error){

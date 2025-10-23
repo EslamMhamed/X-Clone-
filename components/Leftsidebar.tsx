@@ -1,12 +1,11 @@
-import Image from "next/image"
 import Link from "next/link"
 import { BiBell, BiEnvelope } from "react-icons/bi"
 import { BsPeople } from "react-icons/bs"
 import { FaFeather, FaRegUser, FaXTwitter } from "react-icons/fa6"
 import { GoHomeFill } from "react-icons/go"
-import { HiDotsHorizontal } from "react-icons/hi"
 import { IoSearchOutline } from "react-icons/io5"
 import { TbDotsCircleHorizontal } from "react-icons/tb"
+import Profile from "./Profile"
 
 function Leftsidebar() {
   return (
@@ -52,16 +51,7 @@ function Leftsidebar() {
         <button className="bg-primary p-3 mt-3 rounded-full cursor-pointer text-white lg:hidden">
             <FaFeather size={20} />
         </button>
-        <div className="mt-10 text-white flex justify-between items-center ">
-            <div className="flex items-center gap-2">
-                <Image src="/images/profile.png" alt="profile iamge" width={500} height={500} className="w-10 h-10 object-cover rounded-full" />
-                <div className="hidden lg:block">
-                    <p className="font-semibold">Eslam</p>
-                    <p className="text-secondary-text font-light">@mohaeslam</p>
-                    <HiDotsHorizontal className="hidden lg:block" />
-                </div>
-            </div>
-        </div>
+        <Profile />
     </aside>
   )
 }

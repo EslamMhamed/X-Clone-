@@ -8,6 +8,7 @@ import { IoLocationOutline } from 'react-icons/io5'
 import { RiCalendarScheduleLine } from 'react-icons/ri'
 import { RxCross2 } from 'react-icons/rx'
 import { TbPhoto } from 'react-icons/tb'
+import useGetUser from '../custom-hooks/useGetUser'
 
 function CreatePost() {
 
@@ -16,6 +17,7 @@ function CreatePost() {
     const [imagePreview, setImagePreview]= useState<string | null>(null)
     const isDisabled = post.trim() === "" && !imagePreview
     const fileRef = useRef<HTMLInputElement | null>(null)
+    const {loading, profile, session} = useGetUser()
 
     function handleFileChange (e:React.ChangeEvent<HTMLInputElement>){
         const file = e.target.files?.[0]
@@ -35,9 +37,16 @@ function CreatePost() {
         setPost(prev => prev + emojidata.emoji)
     }
 
+    if(!session) return null
+    if(loading) {
+        <h1 className='text-2xl text-white'>Loading...</h1>
+    }
+
   return (
     <div className='flex gap-4 p-4 border border-border'>
-        <Image src="/images/profile.png" alt='profile' width={500} height={500} className='w-10 h-10 object-cover rounded-full shrink-0 ' />
+        {profile?.avatar_url && 
+        <Image src={profile.avatar_url} alt='profile' width={500} height={500} className='w-10 h-10 object-cover rounded-full shrink-0 ' />
+        }
         <div className='w-full'>
             <textarea value={post} 
             onChange={(e)=> setPost(e.target.value)}
