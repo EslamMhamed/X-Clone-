@@ -13,6 +13,7 @@ function Page() {
     const [iamge, setImage]= useState<null | File>(null)
     const [message, setMessage]= useState("")
     const [user, setUser]= useState<null | User>(null)
+    const [isChecking, setIsChecking] = useState(true)
     const router = useRouter()
 
     useEffect(()=>{
@@ -34,11 +35,17 @@ function Page() {
 
             if(profile){
                 router.replace("/home")
+                return;
             }
+            setIsChecking(false)
 
         }
         handleAuth()
     },[router])
+
+    if(isChecking){
+      <h1 className="text-white text-xl">Checking Profile</h1>
+    }
 
     async function setupUserProfile(e:React.FormEvent) {
             e.preventDefault()

@@ -3,13 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { signinInUser } from "../../services/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import supabaseClient from "../../lib/SupabaseClient";
 
 export default function Home() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const router = useRouter()
 
   async function signin(e:React.FormEvent) {
     e.preventDefault()
@@ -23,8 +26,17 @@ export default function Home() {
         setMessage(result.error)
       }else{
         setMessage("Signin Successful")
+        router.replace("/auth/callback")
       }
   }
+
+  useEffect(()=>{
+    supabaseClient.auth.getSession().then(({data: {session}})=> {
+      if(session){
+        router.replace("/auth/callback")
+      }
+    })
+  },[])
 
   return (
     <div className="h-screen flex items-center justify-center">

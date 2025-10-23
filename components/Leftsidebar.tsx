@@ -6,6 +6,7 @@ import { GoHomeFill } from "react-icons/go"
 import { IoSearchOutline } from "react-icons/io5"
 import { TbDotsCircleHorizontal } from "react-icons/tb"
 import Profile from "./Profile"
+import LogoutButton from "./LogoutButton"
 
 function Leftsidebar() {
   return (
@@ -47,7 +48,7 @@ function Leftsidebar() {
             <span className="hidden lg:inline text-xl font-bold ">More</span>
             </Link>
         </div>
-        <button className="hidden lg:block bg-white text-black p-3 w-full mt-3 font-bold rounded-full cursor-pointer ">Post</button>
+        <LogoutButton />
         <button className="bg-primary p-3 mt-3 rounded-full cursor-pointer text-white lg:hidden">
             <FaFeather size={20} />
         </button>

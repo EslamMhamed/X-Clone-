@@ -15,9 +15,9 @@ function useUserSession() {
 
         const {data: {subscription}} = supabaseClient.auth.onAuthStateChange((_event, newSession)=> {setSession(newSession)})
 
+        fetchSession()
         return  ()=> subscription.unsubscribe()
 
-        fetchSession()
     },[])
 
     return {session, loading}

@@ -38,6 +38,7 @@ function CreatePost() {
     }
 
     if(!session) return null
+    if(!profile)return null
     if(loading) {
         <h1 className='text-2xl text-white'>Loading...</h1>
     }
