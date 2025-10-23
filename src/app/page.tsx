@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { signinInUser, sininInUser } from "../../services/auth";
+import { signinInUser } from "../../services/auth";
 import { useState } from "react";
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
       setMessage("All fields are require")
       return;
     }
-    
+
     const result = await signinInUser(email, password)
       if(result?.error){
         setMessage(result.error)
