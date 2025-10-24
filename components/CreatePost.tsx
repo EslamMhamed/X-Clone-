@@ -9,20 +9,25 @@ import { RiCalendarScheduleLine } from 'react-icons/ri'
 import { RxCross2 } from 'react-icons/rx'
 import { TbPhoto } from 'react-icons/tb'
 import useGetUser from '../custom-hooks/useGetUser'
+import { usePostTweet } from '../custom-hooks/useTweets'
 
 function CreatePost() {
 
     const [post, setPost]= useState("")
     const [showPicker, setShowPicker] = useState(false)
     const [imagePreview, setImagePreview]= useState<string | null>(null)
+    const [tweetImage, setTweetImage]= useState<null | File>(null)
     const isDisabled = post.trim() === "" && !imagePreview
     const fileRef = useRef<HTMLInputElement | null>(null)
     const {loading, profile, session} = useGetUser()
+    const {mutate, isPending} = usePostTweet()
+
 
     function handleFileChange (e:React.ChangeEvent<HTMLInputElement>){
         const file = e.target.files?.[0]
         if(file){
             setImagePreview(URL.createObjectURL(file))
+            setTweetImage(file)
         }
     }
 
@@ -30,6 +35,7 @@ function CreatePost() {
         setImagePreview(null)
         if(fileRef.current){
             fileRef.current.value = ""
+            setTweetImage(null)
         }
     }
 
@@ -43,8 +49,27 @@ function CreatePost() {
         <h1 className='text-2xl text-white'>Loading...</h1>
     }
 
+    function postTweet(){
+        if(!post.trim() && !tweetImage )return;
+        if(!session?.user.id)return
+
+        mutate({
+            userId: session.user.id,
+            content: post || null,
+            tweetImage: tweetImage 
+        }, {
+            onSuccess: ()=>{
+                setPost("");
+                setImagePreview(null);
+                setTweetImage(null)
+            },onError:(error)=>{
+                console.log("Failed to post tweet",error.message)
+            }
+        })
+    }
+
   return (
-    <div className='flex gap-4 p-4 border border-border'>
+    <div className={`flex gap-4 p-4 border border-border ${isPending? "opacity-35":""}`}>
         {profile?.avatar_url && 
         <Image src={profile.avatar_url} alt='profile' width={500} height={500} className='w-10 h-10 object-cover rounded-full shrink-0 ' />
         }
@@ -82,7 +107,7 @@ function CreatePost() {
             </div>
             {isDisabled ?
             <button className='text-black bg-primary py-2 px-5 font-semibold cursor-pointer rounded-full'>Post</button> :
-            <button className='text-black bg-white py-2 px-5 font-semibold cursor-pointer rounded-full'>Post
+            <button onClick={postTweet} className='text-black bg-white py-2 px-5 font-semibold cursor-pointer rounded-full'>Post
             </button>
             }
             {showPicker && (

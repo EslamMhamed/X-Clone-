@@ -1,9 +1,9 @@
 import supabaseClient from "../lib/SupabaseClient"
 
 
-async function createTweet(userId:string, content: string | null, tweetImage: File | null ) {
-    let imageURL: null | File= null
-    let imagePath: null | File= null
+export async function createTweet(userId:string, content: string | null, tweetImage: File | null ) {
+    let imageURL: null | string= null
+    let imagePath: null | string= null
 
     //handle image uploaded
     if(tweetImage){
@@ -17,10 +17,27 @@ async function createTweet(userId:string, content: string | null, tweetImage: Fi
             return
         }
 
-        
+        const {data: {publicUrl}} = supabaseClient.storage.from("tweet-images").getPublicUrl(path)
+
+        imageURL = publicUrl
+        imagePath = path
     }
 
 
-    //save tweets without image
+    //save tweets 
+
+    const {error:insertErr} = await supabaseClient.from("tweets").insert({
+        content: content ? content : null,
+        user_id: userId,
+        image_url:imageURL,
+        image_path: imagePath
+    })
+
+    if(insertErr){
+        console.log("tweet Instert Error")
+        return;
+    }
+
+    return true
 
 }
