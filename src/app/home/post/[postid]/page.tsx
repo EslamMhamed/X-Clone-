@@ -1,7 +1,4 @@
-import { FaHeart, FaRegBookmark, FaRegComment } from "react-icons/fa6";
 import GoButtonBack from "../../../../../components/GoButtonBack";
-import { IoIosStats } from "react-icons/io";
-import { FiRepeat } from "react-icons/fi";
 import Image from "next/image";
 import { BsThreeDots } from "react-icons/bs";
 import ReplayPost from "../../../../../components/ReplayPost";
@@ -9,6 +6,7 @@ import Comments from "../../../../../components/Comments";
 import supabaseClient from "../../../../../lib/SupabaseClient";
 import { Tweet } from "../../../../../types/types";
 import moment from "moment";
+import TweetActions from "../../../../../components/TweetActions";
 
 async function getTweet(id: string) {
   const { error, data } = await supabaseClient
@@ -73,27 +71,7 @@ async function Page({ params }: { params: { postid: string } }) {
               />
             </div>
           )}
-          <div className="flex justify-between my-4">
-            <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-              <FaRegComment />
-              <span className="text-sm ">1.5K</span>
-            </div>
-            <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-              <FiRepeat />
-              <span className="text-sm ">7.5K</span>
-            </div>
-            <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-              <FaHeart />
-              <span className="text-sm ">2.5K</span>
-            </div>
-            <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-              <IoIosStats />
-              <span className="text-sm ">5K</span>
-            </div>
-            <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-              <FaRegBookmark size={20} />
-            </div>
-          </div>
+          <TweetActions creatorId ={tweet.profile.id} imagePath={tweet.image_path} tweetId={tweet.id} isTweetPostViewPage={true} />
         </div>
       </div>
       <ReplayPost />

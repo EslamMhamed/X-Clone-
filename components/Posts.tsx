@@ -9,6 +9,7 @@ import { IoIosStats } from "react-icons/io"
 import { useGetTweets } from "../custom-hooks/useTweets"
 import { Tweet } from "../types/types"
 import moment from "moment"
+import TweetActions from "./TweetActions"
 
 function Posts() {
 
@@ -45,27 +46,7 @@ function Posts() {
                  md:h-130 w-full rounded-lg border border-border object-cover" />
                 </Link>
                 )}
-                <div className="flex justify-between my-4">
-                    <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-                        <FaRegComment />
-                        <span className="text-sm ">1.5K</span>
-                    </div>
-                    <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-                        <FiRepeat />
-                        <span className="text-sm ">7.5K</span>
-                    </div>
-                    <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-                        <FaHeart />
-                        <span className="text-sm ">2.5K</span>
-                    </div>
-                    <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-                        <IoIosStats />
-                        <span className="text-sm ">5K</span>
-                    </div>
-                    <div className="text-secondary-text flex items-center gap-1 hover:text-blue-400 cursor-pointer">
-                        <FaRegBookmark size={20} />
-                    </div>
-                </div>
+                <TweetActions  creatorId ={tweet.profile.id} imagePath={tweet.image_path} tweetId={tweet.id} isTweetPostViewPage={false} />
             </div>
         </div>
         ))}

@@ -51,3 +51,19 @@ export async function getTweets() {
 
     return data
 }
+
+export async function deleteTweet(tweetId:string, imagePath:string | undefined) {
+    const {error:deleteErr} = await supabaseClient.from("tweets").delete().eq("id",tweetId)
+
+    if(deleteErr){
+        console.log("DeleteErrorTweet", deleteErr.message)
+        return
+    }
+
+    if(imagePath){
+        const {error:imageErr} = await supabaseClient.storage.from("tweet-images").remove([imagePath])
+        if(imageErr){
+            console.log("ImageDeleteError", imageErr.message)
+        }
+    }
+}
