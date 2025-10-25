@@ -41,3 +41,13 @@ export async function createTweet(userId:string, content: string | null, tweetIm
     return true
 
 }
+
+export async function getTweets() {
+    const {error, data} = await supabaseClient.from("tweets").select(`*, profile(id, username, name, avatar_url)`).order("created_at", {ascending: false})
+
+    if(error){
+        console.log("FetchTweetsError", error.message)
+    }
+
+    return data
+}
